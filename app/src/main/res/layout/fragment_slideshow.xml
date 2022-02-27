@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_inici_sesio"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#B1D4E0"
+    tools:context=".ui.slideshow.SlideshowFragment">
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="600dp"
+        android:layout_height="290dp"
+        android:background="@drawable/ic_wave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.927"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/Login"
+        android:layout_width="0dp"
+        android:layout_height="465dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/b_logingoogle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="58dp"
+                android:layout_marginLeft="58dp"
+                android:layout_marginEnd="58dp"
+                android:layout_marginRight="58dp"
+                android:layout_marginBottom="30dp"
+                android:text="Iniciar Sesio amb Google"
+                android:textColor="@color/baby_blue"
+                app:backgroundTint="@color/Dark_blue"
+                app:icon="@drawable/baixa"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/et_correu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="58dp"
+                android:layout_marginLeft="58dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="58dp"
+                android:layout_marginRight="58dp"
+                android:ems="10"
+                android:hint="E-mail"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_correu2" />
+
+            <TextView
+                android:id="@+id/tv_correu2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="51dp"
+                android:text="Correu"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/Blue"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/et_correu"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/b_login"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="59dp"
+                android:layout_marginLeft="59dp"
+                android:layout_marginEnd="59dp"
+                android:layout_marginRight="59dp"
+                android:layout_marginBottom="33dp"
+                android:text="Iniciar sessió "
+                android:textColor="@color/Midnight_blue"
+                app:backgroundTint="#00FFFFFF"
+                app:layout_constraintBottom_toTopOf="@+id/b_logingoogle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:rippleColor="@color/Blue"
+                app:strokeColor="@color/Blue"
+                app:strokeWidth="2dp" />
+
+            <EditText
+                android:id="@+id/et_contrasenya"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="59dp"
+                android:layout_marginLeft="59dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="59dp"
+                android:layout_marginRight="59dp"
+                android:ems="10"
+                android:hint="******"
+                android:inputType="textPassword"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_password2" />
+
+            <TextView
+                android:id="@+id/tv_password2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="107dp"
+                android:layout_marginBottom="108dp"
+                android:text="Contrasenya"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/Blue"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/b_login"
+                app:layout_constraintStart_toStartOf="@+id/et_contrasenya"
+                app:layout_constraintTop_toTopOf="@+id/tv_correu2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
