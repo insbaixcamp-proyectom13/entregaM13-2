@@ -71,6 +71,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928819149606:android:7bd04f6c90a8fc31631fe7",
+        "android_client_info": {
+          "package_name": "org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "928819149606-o996ea1gmjbbbgo4k75ltgr51fqo8gqb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIl_m659eTbiiPJ7alkQssKqOJiuOiWj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "928819149606-o996ea1gmjbbbgo4k75ltgr51fqo8gqb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
