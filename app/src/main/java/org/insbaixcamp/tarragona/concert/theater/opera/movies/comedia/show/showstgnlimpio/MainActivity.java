@@ -3,16 +3,19 @@ package org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.show
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,8 +24,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
+import com.google.gson.Gson;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -30,7 +35,10 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.data.RealtimeDatabase;
 import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.databinding.ActivityMainBinding;
+import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.utilities.PicassoTrustAll;
+import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.utilities.pojo.Usuari;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,105 +46,90 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private NavController navController;
     private DrawerLayout drawer;
-    private FirebaseAuth mAuth;
-    private GoogleApiClient googleApiClient;
-    public final String url = "https://eventos-tarragona-app-default-rtdb.firebaseio.com/";
-    private DatabaseReference mDatabase;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        PicassoTrustAll.getInstance(this);
+        findViewById(R.id.recyclerView).setVisibility(View.GONE);
+        RealtimeDatabase.getInstance();
 
-        findViewById(R.id.text_home).setVisibility(View.GONE);
+        //Accions per a donar feedback a l'usuari
         findViewById(R.id.pbHome).setVisibility(View.VISIBLE);
+        setSupportActionBar(binding.appBarMain.toolbar);
+        getSupportActionBar().hide();
+
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        drawer = binding.drawerLayout;
+        navigationView = (NavigationView) binding.navView;
+        lockNavigationDrawer();
 
-        //Firebase Obten resultados del usuario si esta logeado o no
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseDatabase database = FirebaseDatabase.getInstance(url);
-        mDatabase = database.getInstance().getReference();
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home, R.id.nav_carrito, R.id.nav_perfil)
+                .setOpenableLayout(drawer)
+                .build();
 
-        //Si el user esta nulo logeara como anonimo
-        if (user != null ) {
+        NavigationUI.setupActionBarWithNavController(MainActivity.this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
 
-            getUserInfo();
-/*            // Name, email address, and profile photo Url
-            String name = user.getDisplayName();
-            String email = user.getEmail();
-            //Uri photoUrl = user.getPhotoUrl();
+        //El boton de cerrar sesion se pone a la escucha de los clicks
+        MenuItem logout = navigationView.getMenu().findItem(R.id.nav_logout);
+        logout.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
 
-            TNom.setText(name);
-            TEmail.setText(email);
-            // Check if user's email is verified
-            boolean emailVerified = user.isEmailVerified();
+                if (FirebaseAuth.getInstance().getCurrentUser() != null && !FirebaseAuth.getInstance().getCurrentUser().isAnonymous()) {
+                    FirebaseAuth.getInstance().signOut();
+                    FirebaseAuth.getInstance().signInAnonymously().addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                updateUI(new Usuari());
+                                Toast.makeText(MainActivity.this, "Sessio tancada!", Toast.LENGTH_LONG).show();
+                                drawer.closeDrawer(GravityCompat.START);
+                                navController.navigate(R.id.nav_login);
+                            }
+                        }
+                    });
 
-            if (emailVerified){
+                } else {
+                    Toast.makeText(MainActivity.this, "Encara no has iniciar sessio!", Toast.LENGTH_LONG).show();
+                }
 
-                TNom.setText(name);
-                TEmail.setText(email);
+                return true;
+            }
+        });
 
-            } else {
-
-                Toast.makeText(this, "Revisa el teu correu per verificarte", Toast.LENGTH_SHORT).show();
-            }*/
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getIdToken() instead.
-            // String uid = user.getUid();
-        } else {
-
-            mAuth.signInAnonymously();
-        }
-
+        //Redireccion del usuario al fragmento requerido
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 //Si viene de menu principal y quiere iniciar sesion
                 if(getIntent().getStringExtra("button").equals("login")) {
-                    loadHome();
-                    navController.navigate(R.id.nav_slideshow);
+                    navController.navigate(R.id.nav_login);
+                    getSupportActionBar().show();
+                    findViewById(R.id.recyclerView).setVisibility(View.VISIBLE);
 
                 //Si viene de menu principal y quiere registrar-se
                 } else if (getIntent().getStringExtra("button").equals("registre")) {
-                    loadHome();
-                    navController.navigate(R.id.nav_gallery);
+                    navController.navigate(R.id.nav_registre);
+                    getSupportActionBar().show();
+                    findViewById(R.id.recyclerView).setVisibility(View.VISIBLE);
 
-                } else if (getIntent().getStringExtra("button").equals("omitir")){
-                    loadHome();
+                } else {
+                    getSupportActionBar().show();
+                    findViewById(R.id.pbHome).setVisibility(View.GONE);
+                    findViewById(R.id.recyclerView).setVisibility(View.VISIBLE);
                 }
 
             }
-        }, 2000);
-    }
-
-    public void loadHome() {
-        setSupportActionBar(binding.appBarMain.toolbar);
-        findViewById(R.id.pbHome).setVisibility(View.GONE);
-        findViewById(R.id.text_home).setVisibility(View.VISIBLE);
-
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
-        lockNavigationDrawer();
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home)
-                .setOpenableLayout(drawer)
-                .build();
-
-        NavigationUI.setupActionBarWithNavController(MainActivity.this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+        }, 1300);
     }
 
     @Override
@@ -149,67 +142,52 @@ public class MainActivity extends AppCompatActivity {
     public void lockNavigationDrawer() {
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
-            FirebaseAuth.getInstance().getCurrentUser().getUid();
-        }
-    }
-    //Pone la informacion del usuario en el header main
-    private void getUserInfo(){
-        String id = "";
 
-        try {
+    public void updateUI(Usuari currentUser) {
+        View header = navigationView.getHeaderView(0);
+        TextView tvNom = header.findViewById(R.id.tvName);
+        Menu menu = navigationView.getMenu();
+        Usuari user = RealtimeDatabase.getInstance().getRegistrat();
 
-            id = mAuth.getCurrentUser().getUid();
+        //Los datos si el usuario fuese anonimo, se esconde el
+        //boton de cerrar sesion y otros como el del carrito y perfil
+        if (FirebaseAuth.getInstance().getCurrentUser().isAnonymous()) {
+            ImageView iv = header.findViewById(R.id.ivUserImg);
+            iv.setImageResource(R.drawable.teatro);
+            tvNom.setText("Anonymous");
+            menu.findItem(R.id.nav_login).setVisible(true);
+            menu.findItem(R.id.nav_logout).setVisible(false);
+            menu.findItem(R.id.nav_carrito).setVisible(false);
+            menu.findItem(R.id.nav_perfil).setVisible(false);
 
-        } catch (NullPointerException ex){
-
-            mAuth.signInAnonymously();
-        }
-
-        if (mAuth.getCurrentUser()==null){
-            Toast.makeText(this, "User nulo", Toast.LENGTH_SHORT).show();
+        //En caso que el usuario este registrado se mostraran los
+        //botones necesarios y se consultaran los datos de FireBaseDB
         } else {
-            id = mAuth.getCurrentUser().getUid();
+
+            ImageView iv = header.findViewById(R.id.ivUserImg);
+            iv.setImageResource(R.drawable.user);
+
+            FirebaseDatabase.getInstance().getReference().child("usuaris").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String string = new Gson().toJson(snapshot.getValue());
+                    Usuari registrat = new Gson().fromJson(string, Usuari.class);
+                    if (registrat != null)
+                        tvNom.setText(registrat.getDni());
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            menu.findItem(R.id.nav_login).setVisible(false);
+            menu.findItem(R.id.nav_logout).setVisible(true);
+            menu.findItem(R.id.nav_carrito).setVisible(true);
+            menu.findItem(R.id.nav_perfil).setVisible(true);
+
         }
 
-/*        Log.i("funciona", mAuth.getCurrentUser().getUid());
-        mAuth.signInAnonymously();
-        Log.i("funciona", mAuth.getCurrentUser().getUid());*/
-
-        mDatabase.child("Usuaris").child(id).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-
-                if (snapshot.exists()) {
-
-
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                    String name = snapshot.child("Nom").getValue().toString();
-                    String email = snapshot.child("Correu").getValue().toString();
-                    Uri photoUrl = user.getPhotoUrl();
-
-                    NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-                    View headerView = navigationView.getHeaderView(0);
-
-                    TextView TNom = headerView.findViewById(R.id.tv_nom);
-                    TextView TEmail = headerView.findViewById(R.id.tv_email);
-                    ImageView profileImage = headerView.findViewById(R.id.iv_logo);
-
-                    profileImage.setImageURI(photoUrl);
-                    TNom.setText(name);
-                    TEmail.setText(email);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

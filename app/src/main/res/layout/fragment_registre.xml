@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/baby_blue"
-    tools:context=".ui.gallery.GalleryFragment">
+    tools:context=".ui.registre.RegistreFragment">
 
     <View
         android:id="@+id/view2"
@@ -40,44 +40,44 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/et_congnoms"
+                android:id="@+id/etCognoms"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="18dp"
                 android:ems="10"
                 android:hint="Manolito"
                 android:inputType="textPersonName"
-                app:layout_constraintBottom_toTopOf="@+id/tv_dni"
-                app:layout_constraintEnd_toEndOf="@+id/et_dni"
-                app:layout_constraintStart_toStartOf="@+id/tv_cognoms"
-                app:layout_constraintTop_toBottomOf="@+id/tv_cognoms" />
+                app:layout_constraintBottom_toTopOf="@+id/tvDni"
+                app:layout_constraintEnd_toEndOf="@+id/etDni"
+                app:layout_constraintStart_toStartOf="@+id/tvCognoms"
+                app:layout_constraintTop_toBottomOf="@+id/tvCognoms" />
 
             <TextView
-                android:id="@+id/tv_telefon"
+                android:id="@+id/tvTelefon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Telèfon"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/Blue"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/et_telefon"
-                app:layout_constraintStart_toStartOf="@+id/et_dni"
-                app:layout_constraintTop_toBottomOf="@+id/et_dni" />
+                app:layout_constraintBottom_toTopOf="@+id/etTelefon"
+                app:layout_constraintStart_toStartOf="@+id/etDni"
+                app:layout_constraintTop_toBottomOf="@+id/etDni" />
 
             <TextView
-                android:id="@+id/tv_dni"
+                android:id="@+id/tvDni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DNI"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/Blue"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/et_dni"
-                app:layout_constraintStart_toStartOf="@+id/et_dni"
-                app:layout_constraintTop_toBottomOf="@+id/et_congnoms" />
+                app:layout_constraintBottom_toTopOf="@+id/etDni"
+                app:layout_constraintStart_toStartOf="@+id/etDni"
+                app:layout_constraintTop_toBottomOf="@+id/etCognoms" />
 
             <TextView
-                android:id="@+id/tv_password2"
+                android:id="@+id/tvPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="55dp"
@@ -86,25 +86,25 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/Blue"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/et_password"
+                app:layout_constraintBottom_toTopOf="@+id/etPassword"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_email" />
+                app:layout_constraintTop_toBottomOf="@+id/etEmail" />
 
             <EditText
-                android:id="@+id/et_email"
+                android:id="@+id/etEmail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="18dp"
                 android:ems="10"
                 android:hint="pepito@gmail.com"
                 android:inputType="textEmailAddress"
-                app:layout_constraintBottom_toTopOf="@+id/tv_password2"
-                app:layout_constraintEnd_toEndOf="@+id/et_password"
-                app:layout_constraintStart_toStartOf="@+id/tv_correu2"
-                app:layout_constraintTop_toBottomOf="@+id/tv_correu2" />
+                app:layout_constraintBottom_toTopOf="@+id/tvPassword"
+                app:layout_constraintEnd_toEndOf="@+id/etPassword"
+                app:layout_constraintStart_toStartOf="@+id/tvCorreu"
+                app:layout_constraintTop_toBottomOf="@+id/tvCorreu" />
 
             <TextView
-                android:id="@+id/tv_cognoms"
+                android:id="@+id/tvCognoms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="55dp"
@@ -113,12 +113,12 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/Blue"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/et_congnoms"
+                app:layout_constraintBottom_toTopOf="@+id/etCognoms"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_nom" />
+                app:layout_constraintTop_toBottomOf="@+id/etNom" />
 
             <EditText
-                android:id="@+id/et_dni"
+                android:id="@+id/etDni"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="55dp"
@@ -129,13 +129,13 @@
                 android:ems="10"
                 android:hint="12345678X"
                 android:inputType="textPersonName"
-                app:layout_constraintBottom_toTopOf="@+id/tv_telefon"
+                app:layout_constraintBottom_toTopOf="@+id/tvTelefon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_dni" />
+                app:layout_constraintTop_toBottomOf="@+id/tvDni" />
 
             <TextView
-                android:id="@+id/tv_nom"
+                android:id="@+id/tvNom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="55dp"
@@ -144,37 +144,37 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/Blue"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/et_nom"
+                app:layout_constraintBottom_toTopOf="@+id/etNom"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_password" />
+                app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
             <EditText
-                android:id="@+id/et_telefon"
+                android:id="@+id/etTelefon"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="653 53 56 69"
                 android:inputType="phone"
-                app:layout_constraintBottom_toTopOf="@+id/b_registre"
-                app:layout_constraintEnd_toEndOf="@+id/et_dni"
-                app:layout_constraintStart_toStartOf="@+id/tv_telefon"
-                app:layout_constraintTop_toBottomOf="@+id/tv_telefon" />
+                app:layout_constraintBottom_toTopOf="@+id/bRegistrar"
+                app:layout_constraintEnd_toEndOf="@+id/etDni"
+                app:layout_constraintStart_toStartOf="@+id/tvTelefon"
+                app:layout_constraintTop_toBottomOf="@+id/tvTelefon" />
 
             <EditText
-                android:id="@+id/et_password"
+                android:id="@+id/etPassword"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="18dp"
                 android:ems="10"
                 android:hint="*******"
                 android:inputType="textPassword"
-                app:layout_constraintBottom_toTopOf="@+id/tv_nom"
-                app:layout_constraintEnd_toEndOf="@+id/et_nom"
-                app:layout_constraintStart_toStartOf="@+id/tv_password2"
-                app:layout_constraintTop_toBottomOf="@+id/tv_password2" />
+                app:layout_constraintBottom_toTopOf="@+id/tvNom"
+                app:layout_constraintEnd_toEndOf="@+id/etNom"
+                app:layout_constraintStart_toStartOf="@+id/tvPassword"
+                app:layout_constraintTop_toBottomOf="@+id/tvPassword" />
 
             <TextView
-                android:id="@+id/tv_correu2"
+                android:id="@+id/tvCorreu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="52dp"
@@ -185,12 +185,12 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/Blue"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/et_email"
+                app:layout_constraintBottom_toTopOf="@+id/etEmail"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/b_registre"
+                android:id="@+id/bRegistrar"
                 android:layout_width="160dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="32dp"
@@ -206,24 +206,24 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/et_telefon"
-                app:layout_constraintTop_toBottomOf="@+id/et_telefon"
+                app:layout_constraintStart_toStartOf="@+id/etTelefon"
+                app:layout_constraintTop_toBottomOf="@+id/etTelefon"
                 app:rippleColor="@color/Blue"
                 app:strokeColor="@color/Blue"
                 app:strokeWidth="4dp" />
 
             <EditText
-                android:id="@+id/et_nom"
+                android:id="@+id/etNom"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="19dp"
                 android:ems="10"
                 android:hint="Pepito"
                 android:inputType="textPersonName"
-                app:layout_constraintBottom_toTopOf="@+id/tv_cognoms"
-                app:layout_constraintEnd_toEndOf="@+id/et_congnoms"
-                app:layout_constraintStart_toStartOf="@+id/tv_nom"
-                app:layout_constraintTop_toBottomOf="@+id/tv_nom" />
+                app:layout_constraintBottom_toTopOf="@+id/tvCognoms"
+                app:layout_constraintEnd_toEndOf="@+id/etCognoms"
+                app:layout_constraintStart_toStartOf="@+id/tvNom"
+                app:layout_constraintTop_toBottomOf="@+id/tvNom" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

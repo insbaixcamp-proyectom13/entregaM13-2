@@ -3,6 +3,19 @@ package org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.show
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Usuari{
+
+    public Usuari() {
+    }
+
+    public Usuari(String cognom, String contrasenya, String correu, String dni, String nom, int telefon) {
+        this.cognom = cognom;
+        this.contrasenya = contrasenya;
+        this.correu = correu;
+        this.dni = dni;
+        this.nom = nom;
+        this.telefon = telefon;
+    }
+
     @JsonProperty("cognom")
     public String getCognom() {
         return this.cognom; }

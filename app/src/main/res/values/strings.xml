@@ -7,7 +7,11 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_home">Inici</string>
+    <string name="menu_registre">Registrat</string>
+    <string name="menu_login">Inicia Sessio</string>
+    <string name="group_items_head">Sessio</string>
+    <string name="menu_tanca_sessio">Tanca Sessio</string>
+    <string name="menu_carrito">Carrito</string>
+    <string name="menu_perfil">Perfil</string>
 </resources>

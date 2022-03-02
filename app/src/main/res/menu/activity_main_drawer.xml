@@ -6,15 +6,35 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_baseline_home_24"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:id="@+id/nav_carrito"
+            android:icon="@drawable/ic_baseline_shopping_cart_24"
+            android:title="@string/menu_carrito" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:id="@+id/nav_perfil"
+            android:icon="@drawable/ic_profile_people_svgrepo_com"
+            android:title="@string/menu_perfil" />
     </group>
+
+    <item android:title="@string/group_items_head">
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/nav_registre"
+                    android:icon="@drawable/ic_add_people_interface_symbol_of_black_person_close_up_with_plus_sign_in_small_circle_svgrepo_com"
+                    android:title="@string/menu_registre" />
+                <item
+                    android:id="@+id/nav_login"
+                    android:icon="@drawable/ic_login_svgrepo_com"
+                    android:title="@string/menu_login" />
+                <item
+                    android:id="@+id/nav_logout"
+                    android:icon="@drawable/ic_logout_svgrepo_com"
+                    android:title="@string/menu_tanca_sessio" />
+            </group>
+        </menu>
+    </item>
+
 </menu>

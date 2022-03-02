@@ -1,4 +1,4 @@
-package org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.ui.gallery;
+package org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.ui.registre;
 
 
 import android.app.Activity;
@@ -28,46 +28,48 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.MainActivity;
 import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.R;
-import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.databinding.FragmentGalleryBinding;
-import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.ui.gallery.GalleryViewModel;
+import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.data.RealtimeDatabase;
+import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.databinding.FragmentRegistreBinding;
+import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.utilities.pojo.Usuari;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class GalleryFragment extends Fragment {
+public class RegistreFragment extends Fragment {
 
-    private GalleryViewModel galleryViewModel;
-    private FragmentGalleryBinding binding;
+    private RegistreViewModel registreViewModel;
+    private FragmentRegistreBinding binding;
+    private View root;
     private DatabaseReference mDatabase;
-    public final String url = "https://eventos-tarragona-app-default-rtdb.firebaseio.com/";
+    public final String url = "https://showstarragona-default-rtdb.firebaseio.com/";
     private FirebaseAuth mAuth;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
+        registreViewModel =
+                new ViewModelProvider(this).get(RegistreViewModel.class);
 
-        FirebaseApp.initializeApp(getContext());
+        binding = FragmentRegistreBinding.inflate(inflater, container, false);
+        root = binding.getRoot();
+
+        mAuth = FirebaseAuth.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance(url);
         mDatabase = database.getInstance().getReference();
 
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        Button registry = binding.bRegistre;
+        Button registry = binding.bRegistrar;
         EditText etcorreu = binding.etEmail;
         EditText etcontrasenya = binding.etPassword;
         EditText etnom = binding.etNom;
-        EditText etcognom = binding.etCongnoms;
+        EditText etcognom = binding.etCognoms;
         EditText etdni = binding.etDni;
 
-        //AL pulsar el boton envia los datos del usuario al firebase y añade un nuevo usuario al Autentication
+
         registry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 EditText ettelefon = binding.etTelefon;
 
                 String correu = etcorreu.getText().toString();
@@ -75,7 +77,7 @@ public class GalleryFragment extends Fragment {
                 String nom = etnom.getText().toString();
                 String cognom = etcognom.getText().toString();
                 String dni = etdni.getText().toString();
-                int telephone = Integer.parseInt(ettelefon.getText().toString());
+                int telefon = Integer.parseInt(ettelefon.getText().toString());
 
                 Pattern pattern = Pattern
                         .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -83,7 +85,7 @@ public class GalleryFragment extends Fragment {
 
                 Pattern patron = Pattern.compile("[0-9]{7,8}[A-Z a-z]");
 
-                Map<String, Object> datesUsury = new HashMap<>();
+                Map<String, Object> dadesUsuari = new HashMap<>();
 
                 if (!correu.isEmpty() &&
                         !contrasenya.isEmpty() &&
@@ -91,21 +93,17 @@ public class GalleryFragment extends Fragment {
                         !cognom.isEmpty() &&
                         !dni.isEmpty()) {
 
-                    Matcher matcherEmail = pattern.matcher(correu);
-                    Matcher matchedDNI = patron.matcher(dni);
+                    Matcher machercorreu = pattern.matcher(correu);
+                    Matcher matcherdni = patron.matcher(dni);
 
-                    if (matcherEmail.matches() && matchedDNI.matches()){
+                    if (machercorreu.matches() && matcherdni.matches()){
 
-                        datesUsury.put("Correu",correu);
-                        datesUsury.put("Contrasenya",contrasenya);
-                        datesUsury.put("Nom",nom);
-                        datesUsury.put("Cognom",cognom);
-                        datesUsury.put("DNI",dni);
-                        datesUsury.put("Telefon",telephone);
-
-                        mDatabase.child("Usuaris").push().setValue(datesUsury);
-
-                        mAuth = FirebaseAuth.getInstance();
+                        dadesUsuari.put("correu",correu);
+                        dadesUsuari.put("contrasenya",contrasenya);
+                        dadesUsuari.put("nom",nom);
+                        dadesUsuari.put("cognom",cognom);
+                        dadesUsuari.put("dni",dni);
+                        dadesUsuari.put("telefon",telefon);
 
                         mAuth.createUserWithEmailAndPassword(correu, contrasenya)
                                 .addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
@@ -114,17 +112,25 @@ public class GalleryFragment extends Fragment {
                                         if (task.isSuccessful()) {
                                             // Sign in success, update UI with the signed-in user's information
                                             FirebaseUser user = mAuth.getCurrentUser();
-                                            updateUI(user);
-
-                                            Toast.makeText(getContext(),"Has sigut registrat correctament. Inicia Sesio.",Toast.LENGTH_LONG).show();
-                                            Navigation.findNavController(binding.getRoot()).navigate(R.id.nav_slideshow);
+                                            Usuari usuari = new Usuari(cognom, contrasenya, correu, dni, nom, telefon);
+                                            RealtimeDatabase.getInstance().carregaDadesUsuari(user.getUid());
+                                            RealtimeDatabase.getInstance().setRegistrat(usuari);
+                                            mDatabase.child("usuaris").child(user.getUid()).setValue(dadesUsuari).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(getContext(),"Has sigut registrat correctament",Toast.LENGTH_LONG).show();
+                                                        Navigation.findNavController(root).navigate(R.id.nav_home);
+                                                    }
+                                                }
+                                            });
 
                                         } else {
                                             // If sign in fails, display a message to the user.
 
                                             Toast.makeText(getContext(), "Authentication failed.",
                                                     Toast.LENGTH_SHORT).show();
-                                            updateUI(null);
+
                                         }
                                     }
                                 });
@@ -139,13 +145,6 @@ public class GalleryFragment extends Fragment {
             }
         });
 
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-
-
-            }
-        });
         return root;
     }
 
@@ -155,10 +154,4 @@ public class GalleryFragment extends Fragment {
         binding = null;
     }
 
-    //Metodos / Contructores vacios
-    private void updateUI(FirebaseUser user) {
-
-    }
-
-    private void reload() { }
 }

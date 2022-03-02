@@ -50,11 +50,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         holder.ivImatge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                final NavController nav = Navigation.findNavController(view);
-//                Bundle bundle = new Bundle();
-//                Log.i("position", events.get(position).getNom());
-//                bundle.putSerializable("event", events.get(position));
-//                nav.navigate(R.id.nav_event, bundle);
+                final NavController nav = Navigation.findNavController(view);
+                Bundle bundle = new Bundle();
+                Log.i("position", events.get(position).getNom());
+                bundle.putSerializable("event", events.get(position));
+                nav.navigate(R.id.nav_event, bundle);
             }
         });
     }
