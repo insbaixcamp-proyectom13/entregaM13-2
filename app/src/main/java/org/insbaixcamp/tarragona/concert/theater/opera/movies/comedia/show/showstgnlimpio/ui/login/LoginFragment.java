@@ -1,6 +1,5 @@
 package org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.ui.login;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,20 +8,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -33,7 +26,6 @@ import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.shows
 import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.R;
 import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.data.RealtimeDatabase;
 import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.databinding.FragmentLoginBinding;
-import org.jetbrains.annotations.NotNull;
 
 public class LoginFragment extends Fragment{
 
@@ -43,6 +35,10 @@ public class LoginFragment extends Fragment{
     private EditText etCorreu;
     private EditText etPsw;
     private Button btLogin;
+    private Button btRegistre;
+
+    public LoginFragment() {
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -54,7 +50,15 @@ public class LoginFragment extends Fragment{
         etCorreu = binding.etCorreu;
         etPsw = binding.etContrasenya;
         btLogin = binding.bLogin;
+        btRegistre = binding.bRegistre;
 
+        btRegistre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment_content_main)
+                        .navigate(R.id.nav_registre);
+            }
+        });
 
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override

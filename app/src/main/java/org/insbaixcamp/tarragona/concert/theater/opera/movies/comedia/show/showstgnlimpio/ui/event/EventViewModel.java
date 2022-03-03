@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
+import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.data.FirebaseConnection;
 import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.utilities.pojo.Event;
 import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.utilities.pojo.Opinio;
 
@@ -32,13 +33,14 @@ public class EventViewModel extends ViewModel {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Opinio opinio = snapshot.getValue(Opinio.class);
-                Log.i("opinio", opinio.toString());
-
+                ArrayList<Opinio> opinions = new ArrayList<>();
                 if (mOpinions.getValue() != null) {
-                    ArrayList<Opinio> opinions = mOpinions.getValue();
-                    opinions.add(opinio);
-                    mOpinions.setValue(opinions);
+                    opinions = mOpinions.getValue();
                 }
+
+                opinions.add(opinio);
+                mOpinions.setValue(opinions);
+
             }
 
             @Override
@@ -72,8 +74,4 @@ public class EventViewModel extends ViewModel {
         return mOpinions;
     }
 
-    public void setEvent(Event event) {
-        mEvent.setValue(event);
-
-    }
 }

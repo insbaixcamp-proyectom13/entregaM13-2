@@ -31,6 +31,8 @@
         <entry key="..\:/Users/juanjose/Desktop/DAM/M13/misPruebas/ShowsTGNLimpio_Registro/app/src/main/res/drawable/ic_baseline_login_24.xml" value="0.267" />
         <entry key="..\:/Users/juanjose/Desktop/DAM/M13/misPruebas/ShowsTGNLimpio_Registro/app/src/main/res/drawable/ic_login_svgrepo_com.xml" value="0.3675" />
         <entry key="..\:/Users/juanjose/Desktop/DAM/M13/misPruebas/ShowsTGNLimpio_Registro/app/src/main/res/drawable/ic_logout_svgrepo_com.xml" value="0.3675" />
+        <entry key="..\:/Users/juanjose/Desktop/DAM/M13/misPruebas/ShowsTGNLimpio_Registro/app/src/main/res/drawable/ic_minus_svgrepo_com.xml" value="0.23" />
+        <entry key="..\:/Users/juanjose/Desktop/DAM/M13/misPruebas/ShowsTGNLimpio_Registro/app/src/main/res/drawable/ic_plus_svgrepo_com.xml" value="0.2475" />
         <entry key="..\:/Users/juanjose/Desktop/DAM/M13/misPruebas/ShowsTGNLimpio_Registro/app/src/main/res/drawable/side_nav_bar.xml" value="0.3675" />
         <entry key="..\:/Users/juanjose/Desktop/DAM/M13/misPruebas/ShowsTGNLimpio_Registro/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/juanjose/Desktop/DAM/M13/misPruebas/ShowsTGNLimpio_Registro/app/src/main/res/layout/activity_menu_principal.xml" value="0.36666666666666664" />
@@ -38,7 +40,7 @@
         <entry key="..\:/Users/juanjose/Desktop/DAM/M13/misPruebas/ShowsTGNLimpio_Registro/app/src/main/res/layout/content_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/juanjose/Desktop/DAM/M13/misPruebas/ShowsTGNLimpio_Registro/app/src/main/res/layout/content_opinions.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/juanjose/Desktop/DAM/M13/misPruebas/ShowsTGNLimpio_Registro/app/src/main/res/layout/fragment_carrito.xml" value="0.13055555555555556" />
-        <entry key="..\:/Users/juanjose/Desktop/DAM/M13/misPruebas/ShowsTGNLimpio_Registro/app/src/main/res/layout/fragment_event.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/juanjose/Desktop/DAM/M13/misPruebas/ShowsTGNLimpio_Registro/app/src/main/res/layout/fragment_event.xml" value="0.5" />
         <entry key="..\:/Users/juanjose/Desktop/DAM/M13/misPruebas/ShowsTGNLimpio_Registro/app/src/main/res/layout/fragment_home.xml" value="0.18958333333333333" />
         <entry key="..\:/Users/juanjose/Desktop/DAM/M13/misPruebas/ShowsTGNLimpio_Registro/app/src/main/res/layout/fragment_login.xml" value="0.1685185185185185" />
         <entry key="..\:/Users/juanjose/Desktop/DAM/M13/misPruebas/ShowsTGNLimpio_Registro/app/src/main/res/layout/fragment_perfil.xml" value="0.16944444444444445" />

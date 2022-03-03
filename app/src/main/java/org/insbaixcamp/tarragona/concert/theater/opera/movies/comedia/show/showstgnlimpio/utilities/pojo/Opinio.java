@@ -6,6 +6,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Opinio {
+
+    public Opinio(String opinio, int id, String usuari, String nomUsuari, int puntuacion) {
+
+        this.opinio = opinio;
+        this.event = id;
+        this.usuari = usuari;
+        this.nomUsuari = nomUsuari;
+        this.puntuacio = puntuacion;
+    }
+
+    public Opinio() {
+    }
+
     @JsonProperty("data")
     public String getData() {
         return this.data; }
@@ -42,32 +55,4 @@ public class Opinio {
     public void setUsuari(String usuari) {
         this.usuari = usuari; }
     String usuari;
-
-    @Override
-    public String toString() {
-        return "Opinio{" +
-                "data='" + data + '\'' +
-                ", event=" + event +
-                ", nomUsuari='" + nomUsuari + '\'' +
-                ", opinio='" + opinio + '\'' +
-                ", puntuacio=" + puntuacio +
-                ", usuari='" + usuari + '\'' +
-                '}';
-    }
-
-    public Opinio() {
-
-    }
-
-    public Opinio(String opinio, int id, String usuari, String nomUsuari, int puntuacion) {
-        String pattern = "dd/MM/yyyy";
-        String dateInString = new SimpleDateFormat(pattern).format(new Date());
-
-        this.opinio = opinio;
-        this.event = id;
-        this.usuari = usuari;
-        this.nomUsuari = nomUsuari;
-        this.puntuacio = puntuacion;
-        this.data = dateInString;
-    }
 }

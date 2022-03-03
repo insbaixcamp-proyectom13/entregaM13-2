@@ -3,6 +3,14 @@ package org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.show
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Reserva{
+    public Reserva(String uid, String data, int event, int id, int pagades) {
+        setId(id);
+        setDataReserva(data);
+        setClient(uid);
+        setEvent(event);
+        setPagades(pagades);
+    }
+
     @JsonProperty("client")
     public String getClient() {
         return this.client; }

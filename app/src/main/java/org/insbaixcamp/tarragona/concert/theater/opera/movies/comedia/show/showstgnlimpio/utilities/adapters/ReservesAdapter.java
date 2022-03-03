@@ -10,6 +10,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+
 import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.R;
 import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.utilities.PicassoTrustAll;
 import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.utilities.pojo.Event;
@@ -19,16 +27,14 @@ import java.util.ArrayList;
 
 public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.ViewHolder> {
 
+    private Event event;
     protected ArrayList<Event> events;
     private ArrayList<Reserva> reservas;
     private View root;
-//    private FirebaseConnection fb;
-
 
     public ReservesAdapter(ArrayList<Reserva> reservas, ArrayList<Event> events) {
-        this.events = events;
         this.reservas = reservas;
-
+        this.events = events;
     }
 
     @NonNull
@@ -41,43 +47,16 @@ public class ReservesAdapter extends RecyclerView.Adapter<ReservesAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Event event = getEvent(reservas.get(position).getEvent());
-        Log.i("event", event.toString());
-//        if (event != null) {
-            holder.tvTitol.setText(event.getNom());
-            holder.tvPreu.setText(String.valueOf(reservas.get(position).getPagades()));
-            holder.tvData.setText(String.valueOf(reservas.get(position).getDataReserva()));
+        int eventId = reservas.get((reservas.size()-position)-1).getEvent();
+        Event event = events.get(eventId);
 
-            PicassoTrustAll.getInstance().load(event.getImatge()).into(holder.ivImatge);
-//        }
+        holder.tvTitol.setText(event.getNom());
+        holder.tvPreu.setText(String.valueOf(reservas.get((reservas.size()-position)-1).getPagades()));
+        holder.tvData.setText(String.valueOf(reservas.get((reservas.size()-position)-1).getDataReserva()));
 
-//        holder.tvTitol.setText(events.get(position).getNom());
-//        holder.tvPreu.setText(String.valueOf(reservas.get(position).getPagades()));
-//        holder.tvData.setText(String.valueOf(reservas.get(position).getDataReserva()));
-//
-//        PicassoTrustAll.getInstance().load(events.get(position).getImatge()).into(holder.ivImatge);
+        PicassoTrustAll.getInstance().load(event.getImatge()).into(holder.ivImatge);
 
     }
-
-    private Event getEvent(int id) {
-        Event newEvent = null;
-        for (Event event : events) {
-            if (event.getId() == id) {
-                newEvent = event;
-            }
-        }
-        return newEvent;
-    }
-
-    private Reserva getReserva(int position) {
-        for (Reserva reserva : reservas) {
-            if (reserva.getId() == events.get(position).getId()) {
-                return reserva;
-            }
-        }
-        return null;
-    }
-
 
     @Override
     public long getItemId(int position) {

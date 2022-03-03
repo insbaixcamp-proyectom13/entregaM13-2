@@ -24,7 +24,7 @@ public class MenuPrincipal extends AppCompatActivity {
         String stringPreferences = preferences.getString("usuari", "");
 
         //Si las shared preferences no estan vacias, mandamos directamente a la lista de eventos
-        if (!stringPreferences.trim().equals("") && stringPreferences != null) {
+        if (!stringPreferences.isEmpty() && !stringPreferences.trim().equals("") && stringPreferences != null) {
             Log.i("shared", stringPreferences);
             navigateActivity("omitir");
 

@@ -55,6 +55,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
                 Log.i("position", events.get(position).getNom());
                 bundle.putSerializable("event", events.get(position));
                 nav.navigate(R.id.nav_event, bundle);
+
             }
         });
     }

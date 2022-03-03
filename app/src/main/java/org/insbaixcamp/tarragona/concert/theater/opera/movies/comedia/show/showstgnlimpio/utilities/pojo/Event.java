@@ -91,6 +91,14 @@ public class Event implements Serializable {
     public void setPreu(String preu) {
         this.preu = preu; }
     String preu;
+    @JsonProperty
+    public int getRestants() {
+        return restants;
+    }
+    public void setRestants(int restants) {
+        this.restants = restants;
+    }
+    int restants;
 
     @Override
     public String toString() {

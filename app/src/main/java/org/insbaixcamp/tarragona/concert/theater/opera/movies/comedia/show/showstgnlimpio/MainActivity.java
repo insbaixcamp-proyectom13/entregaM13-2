@@ -1,6 +1,5 @@
 package org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -10,24 +9,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.annotations.NotNull;
 import com.google.gson.Gson;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -37,6 +34,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.data.RealtimeDatabase;
 import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.databinding.ActivityMainBinding;
+import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.ui.login.LoginFragment;
 import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.utilities.PicassoTrustAll;
 import org.insbaixcamp.tarragona.concert.theater.opera.movies.comedia.show.showstgnlimpio.utilities.pojo.Usuari;
 
@@ -92,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                                 updateUI(new Usuari());
                                 Toast.makeText(MainActivity.this, "Sessio tancada!", Toast.LENGTH_LONG).show();
                                 drawer.closeDrawer(GravityCompat.START);
-                                navController.navigate(R.id.nav_login);
+                                navController.navigate(R.id.nav_home);
                             }
                         }
                     });
@@ -139,8 +137,24 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    @Override
+    public void onBackPressed() {
+    }
+
+    public Toolbar getToolbar() {
+        return binding.appBarMain.toolbar;
+    }
+
     public void lockNavigationDrawer() {
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
+    public void hideMainToolbar() {
+        getSupportActionBar().hide();
+    }
+
+    public void showMainToolbar() {
+        getSupportActionBar().show();
     }
 
     public void updateUI(Usuari currentUser) {
@@ -173,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                     String string = new Gson().toJson(snapshot.getValue());
                     Usuari registrat = new Gson().fromJson(string, Usuari.class);
                     if (registrat != null)
-                        tvNom.setText(registrat.getDni());
+                        tvNom.setText(registrat.getNom());
                 }
 
                 @Override

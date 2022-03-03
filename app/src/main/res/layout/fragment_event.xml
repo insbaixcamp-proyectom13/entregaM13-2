@@ -14,10 +14,11 @@
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/ctEvent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/baby_blue"
+            app:contentScrim="@color/Dark_blue"
             app:expandedTitleMarginStart="16dp"
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
             app:title="Test">
@@ -29,37 +30,19 @@
                 android:scaleType="fitXY"
                 android:src="@android:drawable/sym_def_app_icon" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <View
+                android:id="@+id/view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:background="@drawable/gradient" />
 
-                <View
-                    android:id="@+id/view"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="-8dp"
-                    android:background="@drawable/gradient"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView2" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:fontFamily="@font/wght"
-                    android:text="Els Pastorets\nDel Vendrell"
-                    android:textColor="@color/Dark_blue"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginLeft="16dp" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarEvent"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:titleTextColor="@color/white"
+                app:layout_collapseMode="pin"></androidx.appcompat.widget.Toolbar>
 
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -99,6 +82,40 @@
                 android:fontFamily="@font/wght"
                 android:text="Activitat de l’Associació de Relacions Culturals Catalunya Israel (ARCCI). Presentació del llibre Sort-Tel-Aviv. Dues bessones separades pel nazisme, de Josep Calvet. Amagada entre la documentació que guardaven els propietaris d’un antic hostal de Sort, l’any 2017 es descobreix una carta escrita el 1944 per una jove jueva que havia fugit del nazisme a través del Pirineu de Lleida. Aquesta carta, adreçada a la seva bessona resident a Tel-Aviv, va fer un llarg viatge d’anada, va ser retornada i va romandre oblidada durant set dècades. Aquest llibre narra com l’autor aconsegueix localitzar la destinatària mitjançant una recerca que li permet reconstruir la vida de les dues germanes separades pels nazis l’any 1939. "
                 android:textColor="@color/Dark_blue" />
+
+            <LinearLayout
+                android:id="@+id/lytEntrades"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/ivRestaEntrada"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_minus_svgrepo_com" />
+
+                <TextView
+                    android:id="@+id/tvEntrades"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/ivSumaEntrada"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_plus_svgrepo_com" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btComprar"

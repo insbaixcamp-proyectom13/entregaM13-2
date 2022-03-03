@@ -36,6 +36,37 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <Button
+                android:id="@+id/bRegistre"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginEnd="48dp"
+                android:layout_marginBottom="16dp"
+                android:text="Registrar-se"
+                android:textColor="@color/Blue"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:strokeColor="@color/Blue"
+                app:strokeWidth="3dp" />
+
+            <Button
+                android:id="@+id/bLogin"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginEnd="48dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/Blue"
+                android:text="Iniciar Sessio"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/bRegistre"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <EditText
                 android:id="@+id/et_correu"
                 android:layout_width="0dp"
@@ -64,23 +95,6 @@
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="@+id/et_correu"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/b_login"
-                android:layout_width="0dp"
-                android:layout_height="55dp"
-                android:layout_marginStart="59dp"
-                android:layout_marginEnd="59dp"
-                android:layout_marginBottom="16dp"
-                android:text="Iniciar sessió "
-                android:textColor="@color/Midnight_blue"
-                app:backgroundTint="#00FFFFFF"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:rippleColor="@color/Blue"
-                app:strokeColor="@color/Blue"
-                app:strokeWidth="2dp" />
 
             <EditText
                 android:id="@+id/et_contrasenya"

@@ -77,7 +77,7 @@ public class RegistreFragment extends Fragment {
                 String nom = etnom.getText().toString();
                 String cognom = etcognom.getText().toString();
                 String dni = etdni.getText().toString();
-                int telefon = Integer.parseInt(ettelefon.getText().toString());
+                String telefon = ettelefon.getText().toString();
 
                 Pattern pattern = Pattern
                         .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -87,60 +87,66 @@ public class RegistreFragment extends Fragment {
 
                 Map<String, Object> dadesUsuari = new HashMap<>();
 
-                if (!correu.isEmpty() &&
-                        !contrasenya.isEmpty() &&
-                        !nom.isEmpty() &&
-                        !cognom.isEmpty() &&
-                        !dni.isEmpty()) {
+                if (FirebaseAuth.getInstance().getCurrentUser().isAnonymous()) {
+                    if (!correu.isEmpty() &&
+                            !contrasenya.isEmpty() &&
+                            !nom.isEmpty() &&
+                            !cognom.isEmpty() &&
+                            !dni.isEmpty() &&
+                            !telefon.isEmpty()) {
 
-                    Matcher machercorreu = pattern.matcher(correu);
-                    Matcher matcherdni = patron.matcher(dni);
+                        Matcher machercorreu = pattern.matcher(correu);
+                        Matcher matcherdni = patron.matcher(dni);
 
-                    if (machercorreu.matches() && matcherdni.matches()){
+                        if (machercorreu.matches() && matcherdni.matches()){
 
-                        dadesUsuari.put("correu",correu);
-                        dadesUsuari.put("contrasenya",contrasenya);
-                        dadesUsuari.put("nom",nom);
-                        dadesUsuari.put("cognom",cognom);
-                        dadesUsuari.put("dni",dni);
-                        dadesUsuari.put("telefon",telefon);
+                            int tlf = Integer.parseInt(telefon);
+                            dadesUsuari.put("correu",correu);
+                            dadesUsuari.put("contrasenya",contrasenya);
+                            dadesUsuari.put("nom",nom);
+                            dadesUsuari.put("cognom",cognom);
+                            dadesUsuari.put("dni",dni);
+                            dadesUsuari.put("telefon", tlf);
 
-                        mAuth.createUserWithEmailAndPassword(correu, contrasenya)
-                                .addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
-                                            // Sign in success, update UI with the signed-in user's information
-                                            FirebaseUser user = mAuth.getCurrentUser();
-                                            Usuari usuari = new Usuari(cognom, contrasenya, correu, dni, nom, telefon);
-                                            RealtimeDatabase.getInstance().carregaDadesUsuari(user.getUid());
-                                            RealtimeDatabase.getInstance().setRegistrat(usuari);
-                                            mDatabase.child("usuaris").child(user.getUid()).setValue(dadesUsuari).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        Toast.makeText(getContext(),"Has sigut registrat correctament",Toast.LENGTH_LONG).show();
-                                                        Navigation.findNavController(root).navigate(R.id.nav_home);
+                            mAuth.createUserWithEmailAndPassword(correu, contrasenya)
+                                    .addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if (task.isSuccessful()) {
+                                                // Sign in success, update UI with the signed-in user's information
+                                                FirebaseUser user = mAuth.getCurrentUser();
+                                                Usuari usuari = new Usuari(cognom, contrasenya, correu, dni, nom, tlf);
+                                                RealtimeDatabase.getInstance().carregaDadesUsuari(user.getUid());
+                                                RealtimeDatabase.getInstance().setRegistrat(usuari);
+                                                mDatabase.child("usuaris").child(user.getUid()).setValue(dadesUsuari).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Toast.makeText(getContext(),"Has sigut registrat correctament",Toast.LENGTH_LONG).show();
+                                                            Navigation.findNavController(root).navigate(R.id.nav_home);
+                                                        }
                                                     }
-                                                }
-                                            });
+                                                });
 
-                                        } else {
-                                            // If sign in fails, display a message to the user.
+                                            } else {
+                                                // If sign in fails, display a message to the user.
 
-                                            Toast.makeText(getContext(), "Authentication failed.",
-                                                    Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getContext(), "Authentication failed.",
+                                                        Toast.LENGTH_SHORT).show();
 
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                        } else {
+                            Toast.makeText(getContext(),"Introdueix un fomat valid per al Correu o el DNI",Toast.LENGTH_LONG).show();
+                        }
+
                     } else {
-                        Toast.makeText(getContext(),"Introdueix un fomat valid per al Correu o el DNI",Toast.LENGTH_LONG).show();
+
+                        Toast.makeText(getContext(),"Omple tots els camps",Toast.LENGTH_LONG).show();
                     }
-
                 } else {
-
-                    Toast.makeText(getContext(),"Omple tots els camps",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"Primer tanca la teva sessio!",Toast.LENGTH_LONG).show();
                 }
             }
         });
